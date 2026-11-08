@@ -1,182 +1,129 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-page="landing">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#7f1d25">
-  <meta name="description" content="A faithful, nostalgic two-dice recreation of the original Vyapari / ব্যবসায়ী board-game layout.">
-  <title>ব্যবসায়ী · व्यापारी — Two Dice</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Choose online or offline play and the number of players, then open the original Vyapari / ব্যবসায়ী board.">
+  <title>ব্যবসায়ী · व्यापारी — Start</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="preload" as="image" href="assets/vyapari-board.jpg">
 </head>
-<body>
+<body class="landing-page" data-mode="offline">
   <div class="page-grain" aria-hidden="true"></div>
 
-  <header class="masthead">
-    <div class="maker-ribbon">New P.T. Games</div>
-    <div class="masthead-title">
-      <p class="kicker">The original folded-board scan · two-dice edition</p>
-      <h1>
-        <span lang="bn">ব্যবসায়ী</span>
-        <span class="title-dot" aria-hidden="true">•</span>
-        <span lang="hi">व्यापारी</span>
-      </h1>
-      <p class="subtitle">ব্যবসা, ভাগ্য আর দুটি ছক্কা · व्यापार, भाग्य और दो पासे</p>
-    </div>
-    <button class="rules-button" id="rulesButton" type="button">
-      <span>Read the printed rules</span>
-      <small>সুযোগ / मौका · গণতন্ত্রাষ্ট্র / गणराज्य</small>
-    </button>
-  </header>
+  <div class="landing-shell">
+    <header class="landing-header">
+      <a class="brand-lockup" href="index.html" aria-label="Vyapari home">
+        <span class="brand-ribbon">New P.T. Games</span>
+        <span class="brand-sub">original folded-board scan</span>
+      </a>
+      <a class="landing-help" href="assets/vyapari-board.jpg" target="_blank" rel="noopener">See the original board ↗</a>
+    </header>
 
-  <main class="cabinet">
-    <section class="board-column" aria-label="Original Vyapari board">
-      <div class="board-caption">
-        <span class="caption-mark">✦</span>
-        <span>Exact 36-space layout</span>
-        <span class="caption-rule" aria-hidden="true"></span>
-        <span>Follow the yellow arrow ↑</span>
-      </div>
+    <main class="landing-grid">
+      <section class="hero-panel" aria-labelledby="heroTitle">
+        <p class="hero-kicker">ব্যবসায়ী &nbsp;·&nbsp; व्यापारी &nbsp;·&nbsp; The Trader</p>
+        <h1 id="heroTitle">
+          <span lang="bn">ব্যবসায়ী</span>
+          <span class="hero-dot" aria-hidden="true">✦</span>
+          <span lang="hi">व्यापारी</span>
+        </h1>
+        <p class="hero-lead">The old family board, brought back exactly as it was: faded ink, the folded centre seam, the India map, and two dice deciding every move.</p>
 
-      <div class="board-frame">
-        <span class="tape tape-tl" aria-hidden="true"></span>
-        <span class="tape tape-br" aria-hidden="true"></span>
-        <div class="board" id="board">
-          <img class="board-art" src="assets/vyapari-board.jpg" alt="The original scanned Vyapari board, with a map of India, bilingual city squares, rule panels, Mickey Mouse, four illustrated corners and a worn red border.">
-          <div class="board-vignette" aria-hidden="true"></div>
-          <div class="square-layer" id="squareLayer" aria-label="Board spaces"></div>
-          <div class="token-layer" id="tokenLayer" aria-hidden="true"></div>
-          <div class="board-tooltip" id="boardTooltip" role="tooltip"></div>
+        <div class="hero-board-card">
+          <span class="hero-board-stamp">ORIGINAL SCAN</span>
+          <img src="assets/vyapari-board.jpg" alt="Preview of the original scanned Vyapari board with its red frame, India map and illustrated perimeter squares.">
+          <div class="hero-board-caption">The board you remember — not a redraw.</div>
         </div>
-      </div>
 
-      <div class="board-tools">
-        <button type="button" id="zoomButton" class="tool-button">⌕ Magnify the old print</button>
-        <label class="switch-label">
-          <input type="checkbox" id="routeToggle">
-          <span>Show route numbers</span>
-        </label>
-        <a href="assets/vyapari-board.jpg" target="_blank" rel="noopener">Open full scan ↗</a>
-      </div>
-      <p class="board-note">The centre crease, faded ink, scratches and old colours are the real scan — not a redraw.</p>
-    </section>
+        <dl class="hero-facts">
+          <div><dt>36</dt><dd>spaces</dd></div>
+          <div><dt>2</dt><dd>dice</dd></div>
+          <div><dt>2–4</dt><dd>players</dd></div>
+        </dl>
+      </section>
 
-    <aside class="control-panel" aria-label="Dice and game controls">
-      <div class="panel-stamp">36 SPACES <span>◆</span> 2 DICE</div>
-
-      <section class="dice-section" aria-labelledby="diceHeading">
-        <div class="section-heading">
-          <h2 id="diceHeading">ছক্কা / पासे</h2>
-          <span>Both dice, every turn</span>
+      <section class="setup-panel" aria-labelledby="setupTitle">
+        <div class="setup-panel-head">
+          <p class="kicker">Before the first roll</p>
+          <h2 id="setupTitle">Set up the game</h2>
+          <p>Choose the mode and how many people are playing. The board opens after that.</p>
         </div>
-        <div class="dice-tray">
-          <div class="die" id="dieOne" aria-label="Die one, showing 1"></div>
-          <span class="dice-plus" aria-hidden="true">+</span>
-          <div class="die" id="dieTwo" aria-label="Die two, showing 1"></div>
-          <div class="dice-total" aria-live="polite">
-            <small>MOVE</small>
-            <strong id="diceTotal">—</strong>
+
+        <form id="setupForm" action="board.html" method="get">
+          <input type="hidden" name="room" id="roomInput" value="VY-6F2K9Q">
+
+          <fieldset class="setup-step">
+            <legend><span>01</span> Online or offline?</legend>
+            <div class="mode-grid">
+              <input type="radio" name="mode" id="modeOffline" value="offline" checked>
+              <label class="mode-card" for="modeOffline">
+                <span class="mode-icon" aria-hidden="true">⌂</span>
+                <strong>Offline</strong>
+                <small>Pass &amp; play on one screen</small>
+                <em>Ready now</em>
+              </label>
+
+              <input type="radio" name="mode" id="modeOnline" value="online">
+              <label class="mode-card" for="modeOnline">
+                <span class="mode-icon" aria-hidden="true">✦</span>
+                <strong>Online</strong>
+                <small>Create a room and invite link</small>
+                <em>Room setup</em>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="online-room" id="onlineRoom" hidden>
+            <div class="room-code-row">
+              <span>Room code</span>
+              <code id="roomCode">VY-6F2K9Q</code>
+            </div>
+            <label for="inviteLink">Invite link</label>
+            <div class="invite-row">
+              <input id="inviteLink" type="text" readonly aria-label="Invite link">
+              <button type="button" id="copyInvite">Copy</button>
+            </div>
+            <p>Share this link to open the same room. This first build shows the board in room-preview mode; live cross-device moves are the next step.</p>
           </div>
-        </div>
-        <button class="roll-button" id="rollButton" type="button">
-          <span>ROLL TWO DICE</span>
-          <small>or press Space</small>
-        </button>
-      </section>
 
-      <section class="turn-section" aria-labelledby="turnHeading">
-        <div class="section-heading compact">
-          <h2 id="turnHeading">Whose turn?</h2>
-          <span id="turnCounter">Turn 1</span>
-        </div>
-        <div class="current-player">
-          <span class="current-swatch" id="currentSwatch"></span>
-          <div>
-            <strong id="currentPlayerName">Player 1</strong>
-            <small id="currentPlayerPosition">Collect Salary · space 01</small>
+          <fieldset class="setup-step">
+            <legend><span>02</span> Players kitne?</legend>
+            <div class="player-grid">
+              <input type="radio" name="players" id="players2" value="2" checked>
+              <label for="players2"><strong>2</strong><small>Head to head</small></label>
+              <input type="radio" name="players" id="players3" value="3">
+              <label for="players3"><strong>3</strong><small>Three traders</small></label>
+              <input type="radio" name="players" id="players4" value="4">
+              <label for="players4"><strong>4</strong><small>Full table</small></label>
+            </div>
+          </fieldset>
+
+          <div class="setup-summary" id="setupSummary" aria-live="polite">
+            <span class="summary-dot" aria-hidden="true"></span>
+            <strong>Offline · 2 players</strong>
+            <small>One screen, two dice</small>
           </div>
-        </div>
-        <div class="player-count">
-          <span>Players</span>
-          <div class="segmented" role="group" aria-label="Number of players">
-            <button type="button" data-count="2" class="active">2</button>
-            <button type="button" data-count="3">3</button>
-            <button type="button" data-count="4">4</button>
-          </div>
-        </div>
-        <div class="player-list" id="playerList"></div>
+
+          <button class="start-button" type="submit">
+            <span>OPEN THE BOARD</span>
+            <small>बोर्ड दिखाओ →</small>
+          </button>
+          <p class="setup-note">The exact scanned board and printed Bengali / Hindi rule panels are preserved on the next page.</p>
+        </form>
       </section>
+    </main>
 
-      <section class="square-card" id="squareCard" aria-live="polite">
-        <div class="square-card-top">
-          <span class="square-index" id="squareIndex">01 / 36</span>
-          <span class="square-kind" id="squareKind">START</span>
-        </div>
-        <h2 id="squareName">Collect Salary</h2>
-        <p id="squareNote">Start here and follow the yellow arrow up the right edge.</p>
-        <div class="square-price">
-          <span>Printed value</span>
-          <strong id="squarePrice">₹250</strong>
-        </div>
-      </section>
+    <footer class="landing-footer">
+      <span>New P.T. Games</span>
+      <span aria-hidden="true">·</span>
+      <span>Original scan preserved</span>
+      <span aria-hidden="true">·</span>
+      <span>Two-dice edition</span>
+    </footer>
+  </div>
 
-      <section class="log-section" aria-labelledby="logHeading">
-        <div class="section-heading compact">
-          <h2 id="logHeading">খেলার খাতা</h2>
-          <span>Game ledger</span>
-        </div>
-        <ol class="game-log" id="gameLog"></ol>
-      </section>
-
-      <div class="panel-actions">
-        <button type="button" id="resetButton" class="secondary-button">Reset buttons</button>
-        <button type="button" id="soundButton" class="secondary-button" aria-pressed="true">♫ Clack: on</button>
-      </div>
-      <p class="prototype-note">Layout, route and two-dice movement are ready. Chance, Republic, rent and tax effects are kept exactly as printed until you confirm the rule text for the next build.</p>
-    </aside>
-  </main>
-
-  <footer class="site-footer">
-    <span>ব্যবসায়ী / व्यापारी</span>
-    <span aria-hidden="true">·</span>
-    <span>Preserved from the supplied scanned board</span>
-  </footer>
-
-  <dialog class="rules-dialog" id="rulesDialog" aria-labelledby="rulesTitle">
-    <div class="dialog-head">
-      <div>
-        <p class="kicker">As printed on the board</p>
-        <h2 id="rulesTitle">সুযোগ? &nbsp;·&nbsp; मौका? &nbsp;·&nbsp; গণতন্ত্রাষ্ট্র &nbsp;·&nbsp; गणराज्य</h2>
-      </div>
-      <button type="button" class="dialog-close" data-close="rulesDialog" aria-label="Close rules">×</button>
-    </div>
-    <p class="dialog-intro">The left panel is in Bengali and the right panel in Hindi. Both are enlarged from the supplied scan; fold marks and fading have been left visible.</p>
-    <div class="rules-pages">
-      <figure>
-        <img src="assets/rules-left.jpg" alt="Bengali-language Chance and Republic rule panel from the original board">
-        <figcaption>বাংলা নিয়ম · Bengali panel</figcaption>
-      </figure>
-      <figure>
-        <img src="assets/rules-right.jpg" alt="Hindi-language Chance and Republic rule panel from the original board">
-        <figcaption>हिन्दी नियम · Hindi panel</figcaption>
-      </figure>
-    </div>
-  </dialog>
-
-  <dialog class="zoom-dialog" id="zoomDialog" aria-labelledby="zoomTitle">
-    <div class="zoom-toolbar">
-      <h2 id="zoomTitle">The original print, up close</h2>
-      <div class="zoom-controls">
-        <button type="button" id="zoomOut" aria-label="Zoom out">−</button>
-        <output id="zoomLevel">180%</output>
-        <button type="button" id="zoomIn" aria-label="Zoom in">+</button>
-      </div>
-      <button type="button" class="dialog-close" data-close="zoomDialog" aria-label="Close magnified board">×</button>
-    </div>
-    <div class="zoom-viewport" id="zoomViewport">
-      <img id="zoomImage" src="assets/vyapari-board.jpg" alt="Magnified view of the original scanned Vyapari board">
-    </div>
-  </dialog>
-
-  <script src="game.js"></script>
+  <script src="landing.js?v=2"></script>
 </body>
 </html>

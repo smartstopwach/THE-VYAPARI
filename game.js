@@ -126,7 +126,61 @@
   const playerList = $('playerList');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  let players = PLAYER_PRESETS.slice(0, 2).map((preset, i) => ({ ...preset, id: i, position: 0, laps: 0 }));
+  const STORAGE_KEY = 'vyapari.setup';
+  const roomAlphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+  function makeRoomCode() {
+    let bytes;
+    if (window.crypto && window.crypto.getRandomValues) {
+      bytes = new Uint8Array(6);
+      window.crypto.getRandomValues(bytes);
+    } else {
+      bytes = Array.from({ length: 6 }, () => Math.floor(Math.random() * 256));
+    }
+    return `VY-${Array.from(bytes, (byte) => roomAlphabet[byte % roomAlphabet.length]).join('')}`;
+  }
+
+  function readSetup() {
+    const params = new URLSearchParams(window.location.search);
+    let saved = {};
+    try {
+      saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '{}');
+    } catch (_) {
+      saved = {};
+    }
+
+    const modeParam = params.get('mode');
+    const mode = ['online', 'offline'].includes(modeParam)
+      ? modeParam
+      : (['online', 'offline'].includes(saved.mode) ? saved.mode : 'offline');
+
+    const queryPlayers = Number(params.get('players'));
+    const savedPlayers = Number(saved.players);
+    const count = [2, 3, 4].includes(queryPlayers)
+      ? queryPlayers
+      : ([2, 3, 4].includes(savedPlayers) ? savedPlayers : 2);
+
+    let room = '';
+    if (mode === 'online') {
+      const raw = (params.get('room') || saved.room || '').toUpperCase();
+      room = /^VY-[A-Z2-9]{6}$/.test(raw) ? raw : makeRoomCode();
+    }
+    return { mode, players: count, room };
+  }
+
+  const setup = readSetup();
+
+  function saveSetup() {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(setup));
+    } catch (_) {
+      // The query string in the URL is enough when storage is unavailable.
+    }
+  }
+
+  saveSetup();
+
+  let players = PLAYER_PRESETS.slice(0, setup.players).map((preset, i) => ({ ...preset, id: i, position: 0, laps: 0 }));
   let activePlayer = 0;
   let selectedSquare = 0;
   let turn = 1;
@@ -320,7 +374,66 @@
     });
   }
 
+  function inviteUrl() {
+    const url = new URL(window.location.href);
+    url.hash = '';
+    url.searchParams.set('mode', setup.mode);
+    url.searchParams.set('players', String(setup.players));
+    if (setup.mode === 'online') url.searchParams.set('room', setup.room);
+    else url.searchParams.delete('room');
+    return url.toString();
+  }
+
+  async function copyText(text) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch (_) {
+      // Use the selection fallback below.
+    }
+    try {
+      const field = document.createElement('textarea');
+      field.value = text;
+      field.setAttribute('readonly', '');
+      field.style.position = 'fixed';
+      field.style.opacity = '0';
+      document.body.append(field);
+      field.select();
+      const copied = document.execCommand('copy');
+      field.remove();
+      return copied;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function renderSetupUI() {
+    const status = $('setupStatus');
+    const invite = $('inviteButton');
+    const banner = $('onlineBanner');
+    const note = $('onlineNote');
+    if (!status || !invite || !banner || !note) return;
+
+    const online = setup.mode === 'online';
+    document.body.dataset.mode = setup.mode;
+    status.textContent = online
+      ? `Online room ${setup.room} · ${setup.players} players`
+      : `Offline · ${setup.players} players`;
+    invite.hidden = !online;
+    banner.hidden = !online;
+    note.hidden = !online;
+    $('onlineBannerText').textContent = online
+      ? `Room ${setup.room} — share the invite link. Live cross-device play is the next build; this board is in room-preview mode.`
+      : '';
+    document.querySelectorAll('[data-count]').forEach((button) => {
+      button.classList.toggle('active', Number(button.dataset.count) === setup.players);
+    });
+  }
+
   function renderAll() {
+    renderSetupUI();
     renderCurrentPlayer();
     renderPlayerList();
     updateSquareHighlights();
@@ -449,9 +562,8 @@
     }
     players = players.slice(0, count);
     if (activePlayer >= players.length) activePlayer = 0;
-    document.querySelectorAll('[data-count]').forEach((button) => {
-      button.classList.toggle('active', Number(button.dataset.count) === count);
-    });
+    setup.players = count;
+    saveSetup();
     renderAll();
     addLog(`${count} players are ready at Collect Salary.`);
   }
@@ -477,6 +589,15 @@
       event.currentTarget.textContent = `♫ Clack: ${soundOn ? 'on' : 'off'}`;
       if (soundOn) clack(0.6);
     });
+
+    const inviteButton = $('inviteButton');
+    if (inviteButton) {
+      inviteButton.addEventListener('click', async () => {
+        const copied = await copyText(inviteUrl());
+        inviteButton.textContent = copied ? 'Invite copied!' : 'Copy failed';
+        window.setTimeout(() => { inviteButton.textContent = 'Copy invite link'; }, 1700);
+      });
+    }
 
     $('routeToggle').addEventListener('change', (event) => {
       board.classList.toggle('show-route', event.currentTarget.checked);
