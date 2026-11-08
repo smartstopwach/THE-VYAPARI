@@ -1344,3 +1344,120 @@ dialog::backdrop { background: rgba(30, 8, 10, .76); backdrop-filter: blur(3px);
   .rules-button { min-width: 0; }
   .online-banner { flex-direction: column; gap: 2px; margin-left: 14px; margin-right: 14px; }
 }
+
+/* Confirmed-rule ledger: bank, deeds, actions and winner */
+[hidden] { display: none !important; }
+
+.bank-section, .action-section, .deed-section { margin-top: 17px; }
+
+.winner-panel {
+  margin-bottom: 15px;
+  padding: 12px 13px;
+  border: 2px solid #6d1c21;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #8f2c31, #5b1b22);
+  color: #fff0bd;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.14);
+}
+.winner-panel h2 { margin: 0 0 8px; font-family: var(--display); font-size: 16px; letter-spacing: .03em; }
+.winner-body { display: grid; gap: 4px; }
+.score-row { display: flex; justify-content: space-between; gap: 10px; font-size: 11px; }
+.score-row strong { color: var(--gold-soft); }
+.score-row.out { opacity: .62; text-decoration: line-through; }
+
+.bank-list { display: grid; gap: 5px; }
+.bank-row {
+  padding: 6px 8px;
+  display: grid;
+  grid-template-columns: 12px 1fr auto;
+  align-items: center;
+  gap: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: rgba(228, 202, 159, .4);
+  font-size: 11px;
+}
+.bank-row.active { border-color: rgba(173, 65, 53, .5); background: rgba(255, 235, 180, .82); }
+.bank-row.out { opacity: .6; }
+.bank-row strong { color: #5c3628; }
+.bank-row > span:not(.bank-swatch) { color: #7a2c30; font-weight: 900; white-space: nowrap; }
+.bank-row small { grid-column: 2 / -1; color: var(--muted); font-size: 9px; }
+.bank-swatch { width: 11px; height: 11px; border-radius: 50%; background: var(--player-color); border: 1px solid rgba(255,255,255,.8); }
+
+.pending-note {
+  margin-top: 9px;
+  padding: 8px 9px;
+  border-left: 3px solid #b8862c;
+  border-radius: 3px;
+  background: rgba(255, 235, 180, .7);
+  color: #75543c;
+  font-size: 10px;
+  line-height: 1.45;
+}
+.pending-note strong { display: block; color: #8a2e31; font-size: 11px; }
+.pending-note span { display: block; margin-top: 2px; }
+
+.action-section {
+  padding: 11px;
+  border: 2px solid rgba(167, 45, 52, .55);
+  border-radius: 5px;
+  background: rgba(255, 240, 198, .78);
+}
+.action-section p { margin: 0 0 8px; color: #6d4d37; font-size: 11px; line-height: 1.45; }
+.action-fine { color: #8a5a3d !important; font-size: 10px !important; font-style: italic; }
+.action-buttons, .deed-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+.mini-button {
+  padding: 6px 9px;
+  border: 1px solid rgba(107, 54, 35, .55);
+  border-radius: 4px;
+  background: #f1dcb4;
+  color: #653427;
+  font-size: 10px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.mini-button:hover:not(:disabled) { background: #fff0c8; }
+.mini-button.primary { border-color: #6d1c21; background: #a72d34; color: #ffedb9; }
+.mini-button:disabled { cursor: not-allowed; opacity: .48; }
+
+.deed-actions { display: grid; gap: 6px; }
+.deed-row {
+  padding: 7px 8px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(112, 67, 37, .28);
+  border-radius: 4px;
+  background: rgba(240, 217, 170, .55);
+}
+.deed-row.mortgaged { background: rgba(210, 190, 160, .55); border-style: dashed; }
+.deed-label strong { display: block; color: #5c3628; font-size: 11px; }
+.deed-label small { display: block; color: var(--muted); font-size: 9px; margin-top: 2px; }
+.deed-empty { margin: 0; color: var(--muted); font-size: 10px; font-style: italic; }
+
+.player-card.out, .token.bankrupt { opacity: .42; }
+.token.bankrupt { filter: grayscale(1); }
+
+.square.owned::after {
+  content: '';
+  position: absolute;
+  right: 8%;
+  bottom: 10%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--owner-color, #c53b3f);
+  border: 1px solid #fff4d6;
+  box-shadow: 0 0 0 1px rgba(58, 33, 24, .55);
+  pointer-events: none;
+}
+.square.mortgaged::after {
+  background: repeating-linear-gradient(45deg, var(--owner-color, #c53b3f) 0 3px, #f6e8c8 3px 5px);
+}
+
+@media (max-width: 620px) {
+  .action-buttons, .deed-buttons { flex-direction: column; }
+  .mini-button { width: 100%; }
+  .deed-row { grid-template-columns: 1fr; }
+}
