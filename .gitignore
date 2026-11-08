@@ -1,0 +1,6 @@
+# Scratch files and local tooling
+.cache/
+__pycache__/
+*.pyc
+*.log
+.DS_Store
