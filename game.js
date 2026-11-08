@@ -68,7 +68,8 @@
     { name: 'Income Tax', kind: 'tax', price: '₹2,000', local: 'আয়কর / आयकर' },
     { name: 'Jalandhar', kind: 'property', price: '₹1,000', local: 'জলন্ধর / जलंधर' },
     { name: 'Chance', kind: 'chance', price: '—', local: 'সুযোগ / मौका' },
-    { name: 'Durgapur', kind: 'property', price: '₹1,000', local: 'দুর্গাপুর / दुर्गापुर' },
+    // Space 09: verified as Ludhiana from a closer photo supplied by the user.
+    { name: 'Ludhiana', kind: 'property', price: '₹1,000', local: 'লুধিয়ানা / लुधियाना' },
     { name: 'Jail', kind: 'jail', price: '—', local: 'কারাগার / कारागार', note: 'The old black-and-white Jail corner. Its exact effect will follow the printed rules.' },
     { name: 'Dehradun', kind: 'property', price: '₹2,300', local: 'দেহরাদুন / देहरादून' },
     { name: 'Srinagar (Kashmir)', kind: 'property', price: '₹2,700', local: 'শ্রীনগর / श्रीनगर' },

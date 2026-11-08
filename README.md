@@ -41,7 +41,7 @@ The economic rules are also deliberately **not invented** yet. Chance (`সু�
 
 `01` Collect Salary → `02–09` right edge bottom-to-top → `10` Jail → `11–18` top edge right-to-left → `19` Rest corner → `20–27` left edge top-to-bottom → `28` Merchants Club → `29–36` bottom edge left-to-right → back to `01`.
 
-The square metadata in `game.js` is indexed in exactly that order. A few heavily faded printed prices/labels are best verified against the full scan; the visible board itself is unchanged.
+The square metadata in `game.js` is indexed in exactly that order. Space 09 has been verified as **Ludhiana** from a closer photo; a few other heavily faded printed prices/labels are best verified against the full scan. The visible board itself is unchanged.
 
 ## Run locally
 
